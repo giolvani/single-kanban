@@ -1,6 +1,6 @@
 import React from 'react'
-import { ChallengeComponent } from './ChallengeComponent'
-import './App.css'
+import { ChallengeComponent } from './components/ChallengeComponent'
+import './styles/App.css'
 
 function App() {
   return (
