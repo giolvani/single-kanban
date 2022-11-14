@@ -19,7 +19,7 @@ function App() {
           </div>
         </div>
       </header>
-      <main className="code-box">
+      <main>
         <ChallengeComponent />
       </main>
     </div>
