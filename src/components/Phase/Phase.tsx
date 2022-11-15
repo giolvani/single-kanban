@@ -1,7 +1,7 @@
 import { Card as CardComponent } from "components/Card";
 import { useCardContext } from "components/Card/context";
-import { Card as CardType } from "models/Card";
 import { Container, Title } from "./styled";
+import { Card as CardType } from "../Card/model";
 
 type PhaseType = {
   id: number;

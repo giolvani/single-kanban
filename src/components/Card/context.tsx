@@ -1,6 +1,6 @@
-import { Card } from "models/Card";
-import { Phase } from "models/Phase";
+import { Phase } from "components/Phase/model";
 import React, { ReactElement } from "react";
+import { Card } from "./model";
 
 type CardContextType = {
   addCard: (cardDescription: string) => void;

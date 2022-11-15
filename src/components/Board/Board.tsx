@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { CardProvider } from "components/Card/context";
 import { Form } from "components/Form";
 import { Phase as PhaseComponent } from "components/Phase";
-import { Phase as PhaseType } from "models/Phase";
 import { Container } from "./styled";
+import { Card as CardType } from "../Card/model";
+import { Phase as PhaseType } from "../Phase/model";
 import { Phases as PhaseList } from "../../__fixtures__/phase";
-import { CardProvider } from "components/Card/context";
-import { Card as CardType } from "models/Card";
 
 export function Board() {
   const [phases, setPhases] = useState<PhaseType[]>([]);

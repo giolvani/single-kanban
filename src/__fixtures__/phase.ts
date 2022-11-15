@@ -1,4 +1,4 @@
-import { Phase } from "models/Phase";
+import { Phase } from "components/Phase/model";
 import { CardOne, CardTwo, CardThree } from "./card";
 
 export const PhaseOne: Phase = {
