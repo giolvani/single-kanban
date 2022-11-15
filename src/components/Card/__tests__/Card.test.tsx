@@ -1,17 +1,21 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
 import { Card } from "../Card";
 
 const cardDescription = "My card description";
 const moveBack = jest.fn();
 const moveForward = jest.fn();
 
-const setup = () => {
+const setup = (
+  disableForward: boolean = false,
+  disableRewind: boolean = false
+) => {
   render(
     <Card
       description={cardDescription}
       moveBack={moveBack}
       moveForward={moveForward}
+      disableForward={disableForward}
+      disableRewind={disableRewind}
     />
   );
 };
@@ -23,17 +27,15 @@ describe("<Card/>", () => {
     expect(cardTitle).toBeInTheDocument();
   });
 
-  it("call moveBack function when user click on the prev button", async () => {
-    setup();
+  it("prev button button should be disabled if `disableRewind` is true", async () => {
+    setup(false, true);
     const prevButton = screen.getByTitle("Previous phase");
-    userEvent.click(prevButton);
-    await waitFor(() => expect(moveBack).toHaveBeenCalledTimes(1));
+    expect(prevButton).toBeDisabled();
   });
 
-  it("call moveForward function when user click on the next button", async () => {
-    setup();
+  it("next button button should be disabled if `disableForward` is true", async () => {
+    setup(true, false);
     const nextButton = screen.getByTitle("Next phase");
-    userEvent.click(nextButton);
-    await waitFor(() => expect(moveForward).toHaveBeenCalledTimes(1));
+    expect(nextButton).toBeDisabled();
   });
 });
