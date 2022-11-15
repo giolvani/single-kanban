@@ -1,12 +1,18 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Form } from "components/Form";
 import { Phase as PhaseComponent } from "components/Phase";
 import { Phase as PhaseType } from "models/Phase";
 import { Container } from "./styled";
 import { Phases as PhaseList } from "../../__fixtures__/phase";
+import { CardProvider } from "components/Card/context";
+import { Card as CardType } from "models/Card";
 
 export function Board() {
-  const [phases] = useState<PhaseType[]>(PhaseList);
+  const [phases, setPhases] = useState<PhaseType[]>([]);
+
+  useEffect(() => {
+    setPhases(PhaseList);
+  }, []);
 
   const isFirstPhase = useMemo(
     () =>
@@ -26,20 +32,70 @@ export function Board() {
     [phases]
   );
 
+  const addCard = (cardDescription: string): void => {
+    const currentPhases = JSON.parse(JSON.stringify(phases));
+
+    currentPhases[0].cards.push({
+      id: new Date().getTime(),
+      description: cardDescription,
+    } as CardType);
+
+    setPhases(currentPhases);
+  };
+
+  const moveForward = (card: CardType, phaseId: PhaseType["id"]): void => {
+    const currentPhases = JSON.parse(JSON.stringify(phases));
+
+    const currentPhase: PhaseType = currentPhases.find(
+      (phase: PhaseType) => phase.id === phaseId
+    );
+    const currentPhaseIndex = currentPhases.indexOf(currentPhase);
+
+    currentPhase.cards = currentPhase.cards.filter(
+      (currentCard: CardType) => currentCard.id !== card.id
+    );
+
+    const nextPhase = currentPhases[currentPhaseIndex + 1] as PhaseType;
+    nextPhase.cards.push(card);
+
+    setPhases(currentPhases);
+  };
+
+  const moveBack = (card: CardType, phaseId: PhaseType["id"]): void => {
+    const currentPhases = JSON.parse(JSON.stringify(phases));
+
+    const currentPhase: PhaseType = currentPhases.find(
+      (phase: PhaseType) => phase.id === phaseId
+    );
+    const currentPhaseIndex = currentPhases.indexOf(currentPhase);
+
+    currentPhase.cards = currentPhase.cards.filter(
+      (currentCard: CardType) => currentCard.id !== card.id
+    );
+
+    const nextPhase = currentPhases[currentPhaseIndex - 1] as PhaseType;
+    nextPhase.cards.push(card);
+
+    setPhases(currentPhases);
+  };
+
   return (
     <Container>
-      <div className="phases">
-        {phases.map((phase) => (
-          <PhaseComponent
-            key={phase.id}
-            title={phase.title}
-            cards={phase.cards}
-            isFirst={isFirstPhase(phase)}
-            isLast={isLastPhase(phase)}
-          />
-        ))}
-      </div>
-      <Form />
+      <CardProvider value={{ addCard, moveForward, moveBack }}>
+        <div className="phases">
+          {phases.map((phase) => (
+            <PhaseComponent
+              key={phase.id}
+              id={phase.id}
+              title={phase.title}
+              cards={phase.cards}
+              isFirst={isFirstPhase(phase)}
+              isLast={isLastPhase(phase)}
+            />
+          ))}
+        </div>
+        <Form />
+      </CardProvider>
     </Container>
   );
 }
