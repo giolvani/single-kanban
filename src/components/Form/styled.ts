@@ -5,11 +5,20 @@ export const Container = styled.div`
   padding: 8px 16px 16px;
   display: flex;
 
+  form {
+    flex: 1;
+    display: flex;
+  }
+
   input[type="text"] {
     font-size: 1.2em;
     font-weight: normal;
     padding: 10px;
-    width: 20%;
+    width: 22%;
+
+    @media (max-width: 1200px) {
+      width: 100%;
+    }
   }
 `;
 

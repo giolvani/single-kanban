@@ -6,8 +6,9 @@ export const Container = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px); /*TODO: fix that sheet */
+  height: calc(100vh - 110px);
   margin: 0 24px;
+  min-height: 310px;
 
   .phases {
     display: flex;
