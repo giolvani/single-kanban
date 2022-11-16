@@ -24,7 +24,7 @@ export function Phase(props: PhaseType) {
   };
 
   return (
-    <Container>
+    <Container data-testid={`phase-container-${id}`}>
       <Title>{title}</Title>
       {cards?.map((card) => (
         <CardComponent

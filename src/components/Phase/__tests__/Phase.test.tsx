@@ -18,7 +18,7 @@ const setup = () => {
   );
 };
 
-describe("<Card/>", () => {
+describe("<Phase/>", () => {
   it("render properly", () => {
     setup();
     const title = screen.getByText(phaseTitle);
