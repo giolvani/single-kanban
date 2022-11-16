@@ -6,6 +6,7 @@ import { Container } from "./styled";
 import { Card as CardType } from "../Card/model";
 import { Phase as PhaseType } from "../Phase/model";
 import { Phases as PhaseList } from "../../__fixtures__/phase";
+import { moveToNextPhase, moveToPreviousPhase } from "helpers/phase";
 
 export function Board() {
   const [phases, setPhases] = useState<PhaseType[]>([]);
@@ -44,39 +45,15 @@ export function Board() {
   };
 
   const moveForward = (card: CardType, phaseId: PhaseType["id"]): void => {
-    const currentPhases = JSON.parse(JSON.stringify(phases));
-
-    const currentPhase: PhaseType = currentPhases.find(
-      (phase: PhaseType) => phase.id === phaseId
-    );
-    const currentPhaseIndex = currentPhases.indexOf(currentPhase);
-
-    currentPhase.cards = currentPhase.cards.filter(
-      (currentCard: CardType) => currentCard.id !== card.id
-    );
-
-    const nextPhase = currentPhases[currentPhaseIndex + 1] as PhaseType;
-    nextPhase.cards.push(card);
-
-    setPhases(currentPhases);
+    const phasesCopy = JSON.parse(JSON.stringify(phases));
+    const newPhases = moveToNextPhase(phasesCopy, phaseId, card);
+    setPhases(newPhases);
   };
 
   const moveBack = (card: CardType, phaseId: PhaseType["id"]): void => {
-    const currentPhases = JSON.parse(JSON.stringify(phases));
-
-    const currentPhase: PhaseType = currentPhases.find(
-      (phase: PhaseType) => phase.id === phaseId
-    );
-    const currentPhaseIndex = currentPhases.indexOf(currentPhase);
-
-    currentPhase.cards = currentPhase.cards.filter(
-      (currentCard: CardType) => currentCard.id !== card.id
-    );
-
-    const nextPhase = currentPhases[currentPhaseIndex - 1] as PhaseType;
-    nextPhase.cards.push(card);
-
-    setPhases(currentPhases);
+    const phasesCopy = JSON.parse(JSON.stringify(phases));
+    const newPhases = moveToPreviousPhase(phasesCopy, phaseId, card);
+    setPhases(newPhases);
   };
 
   return (
