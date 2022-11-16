@@ -21,18 +21,7 @@ describe("<Board/>", () => {
     expect(phaseItems).toHaveLength(3);
   });
 
-  // it("call moveBack function when user click on the prev button", async () => {
-  //   setup();
-  //   const prevButton = screen.getByTitle("Previous phase");
-  //   userEvent.click(prevButton);
-  //   await waitFor(() => expect(moveBack).toHaveBeenCalledTimes(1));
-  // });
+  it.todo("cover move next button");
 
-  it("call moveForward function when user click on the next button", async () => {
-    setup();
-    const nextButton = screen.getByTestId("phase-container-1");
-    console.log(nextButton);
-    // userEvent.click(nextButton);
-    // await waitFor(() => expect(moveForward).toHaveBeenCalledTimes(1));
-  });
+  it.todo("cover move previous button");
 });
